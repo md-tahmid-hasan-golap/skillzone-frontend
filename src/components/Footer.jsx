@@ -2,103 +2,46 @@
 
 import React from "react";
 import Link from "next/link";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, MapPin, Phone, Sparkles, Heart } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="w-full border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
-      <div className="max-w-[1400px] mx-auto px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* SECTION 1: Brand & About */}
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white font-bold text-lg shadow-md">
-                S
+    <footer className="bg-slate-950 text-slate-200 border-t border-slate-900 relative overflow-hidden">
+      {/* Decorative Blur Orbs */}
+      <div className="absolute top-0 right-1/4 w-[350px] h-[350px] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-[350px] h-[350px] bg-violet-600/10 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-16 pb-8 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+          {/* Brand & About */}
+          <div className="space-y-5">
+            <Link href="/" className="flex items-center gap-2 group w-max">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-violet-500 flex items-center justify-center text-white font-bold shadow-[0_0_20px_rgba(99,102,241,0.3)] group-hover:scale-105 transition-all">
+                <Sparkles className="w-4 h-4" />
               </div>
-              <span className="font-bold text-xl tracking-tight bg-gradient-to-r from-indigo-600 to-violet-500 bg-clip-text text-transparent">
+              <span className="font-extrabold text-xl tracking-tight text-white">
                 SkillZone{" "}
-                <span className="text-slate-800 dark:text-white">AI</span>
+                <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
+                  AI
+                </span>
               </span>
-            </div>
-            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-              Elevate your skills with our AI-powered courses and interactive
-              smart learning roadmap.
-            </p>
-          </div>
-
-          {/* SECTION 2: Quick Links */}
-          <div>
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
-              Explore
-            </h3>
-            <div className="flex flex-col space-y-2.5">
-              <Link
-                href="/"
-                className="text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-              >
-                Home
-              </Link>
-              <Link
-                href="/courses"
-                className="text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-              >
-                Courses
-              </Link>
-              <Link
-                href="/about"
-                className="text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-              >
-                About Us
-              </Link>
-              <Link
-                href="/contact"
-                className="text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-              >
-                Contact
-              </Link>
-            </div>
-          </div>
-
-          {/* SECTION 3: Contact Info */}
-          <div>
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
-              Contact Info
-            </h3>
-            <div className="flex flex-col space-y-3">
-              <div className="flex items-center gap-2.5 text-sm text-slate-600 dark:text-slate-400">
-                <Mail className="w-4 h-4 text-indigo-600 dark:text-indigo-400 flex-shrink-0" />
-                <span>tahmid.hasan@example.com</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-sm text-slate-600 dark:text-slate-400">
-                <Phone className="w-4 h-4 text-indigo-600 dark:text-indigo-400 flex-shrink-0" />
-                <span>+880 1707115247</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-sm text-slate-600 dark:text-slate-400">
-                <MapPin className="w-4 h-4 text-indigo-600 dark:text-indigo-400 flex-shrink-0" />
-                <span>Rajshahi, Bangladesh</span>
-              </div>
-            </div>
-          </div>
-
-          {/* SECTION 4: Connect & Social Links */}
-          <div>
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
-              Connect With Me
-            </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-              Follow my professional updates and open-source activities.
+            </Link>
+            <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
+              Elevate your tech career with our AI-powered courses, interactive
+              smart learning roadmaps, and 24/7 expert mentorship.
             </p>
 
-            <div className="flex items-center gap-4">
-              {/* Facebook SVG */}
+            {/* Social Links (Clean SVG Inline Paths - Safe from Build Crashes) */}
+            <div className="flex gap-3 pt-2">
+              {/* Facebook */}
               <a
                 href="https://www.facebook.com/g.lap.raj"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-600 shadow-sm transition-all duration-200"
+                className="w-9 h-9 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-slate-400 hover:bg-indigo-600 hover:text-white hover:border-indigo-500 transition-all cursor-pointer shadow-lg"
               >
                 <svg
-                  className="w-5 h-5"
+                  className="w-4 h-4"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -110,15 +53,15 @@ const Footer = () => {
                 </svg>
               </a>
 
-              {/* GitHub SVG */}
+              {/* GitHub */}
               <a
                 href="https://github.com/md-tahmid-hasan-golap"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-600 shadow-sm transition-all duration-200"
+                className="w-9 h-9 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-slate-400 hover:bg-indigo-600 hover:text-white hover:border-indigo-500 transition-all cursor-pointer shadow-lg"
               >
                 <svg
-                  className="w-5 h-5"
+                  className="w-4 h-4"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -130,15 +73,15 @@ const Footer = () => {
                 </svg>
               </a>
 
-              {/* LinkedIn SVG */}
+              {/* LinkedIn */}
               <a
-                href="https://www.linkedin.com/in/tahmid-hasan-golap/"
+                href="https://www.linkedin.com/in/tahmid-hasan-golap/?locale=en"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-600 shadow-sm transition-all duration-200"
+                className="w-9 h-9 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-slate-400 hover:bg-indigo-600 hover:text-white hover:border-indigo-500 transition-all cursor-pointer shadow-lg"
               >
                 <svg
-                  className="w-5 h-5"
+                  className="w-4 h-4"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -151,26 +94,91 @@ const Footer = () => {
               </a>
             </div>
           </div>
+
+          {/* Quick Links */}
+          <div className="space-y-4">
+            <h3 className="text-xs font-bold text-slate-300 uppercase tracking-widest">
+              Explore
+            </h3>
+            <ul className="space-y-2.5 text-sm">
+              {[
+                { name: "Home", href: "/" },
+                { name: "Courses", href: "/courses" },
+                { name: "About Us", href: "/about" },
+                { name: "Contact", href: "/contact" },
+              ].map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-slate-400 hover:text-indigo-400 transition-colors flex items-center gap-2 group"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-indigo-500/30 group-hover:bg-indigo-400 transition-colors" />
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div className="space-y-4">
+            <h3 className="text-xs font-bold text-slate-300 uppercase tracking-widest">
+              Legal
+            </h3>
+            <ul className="space-y-2.5 text-sm">
+              {[
+                { name: "Privacy Policy", href: "/privacy" },
+                { name: "Terms of Service", href: "/terms" },
+                { name: "Cookie Policy", href: "/cookies" },
+              ].map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-slate-400 hover:text-indigo-400 transition-colors flex items-center gap-2 group"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-indigo-500/30 group-hover:bg-indigo-400 transition-colors" />
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div className="space-y-4">
+            <h3 className="text-xs font-bold text-slate-300 uppercase tracking-widest">
+              Get in Touch
+            </h3>
+            <ul className="space-y-3 text-sm">
+              <li className="flex items-start gap-3 text-slate-400">
+                <Mail className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                <span className="hover:text-slate-200 transition-colors cursor-pointer">
+                  hello@skillzone.ai
+                </span>
+              </li>
+              <li className="flex items-start gap-3 text-slate-400">
+                <Phone className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                <span className="hover:text-slate-200 transition-colors cursor-pointer">
+                  +880 1700 000000
+                </span>
+              </li>
+              <li className="flex items-start gap-3 text-slate-400">
+                <MapPin className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                <span>Rajshahi, Bangladesh</span>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        {/* BOTTOM SECTION */}
-        <div className="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-slate-500 dark:text-slate-500">
+        {/* Bottom Bar */}
+        <div className="pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+          <p>
             &copy; {new Date().getFullYear()} SkillZone AI. All rights reserved.
           </p>
-          <div className="flex gap-4 text-xs text-slate-500 dark:text-slate-500">
-            <Link
-              href="/privacy"
-              className="hover:text-indigo-600 transition-colors"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/terms"
-              className="hover:text-indigo-600 transition-colors"
-            >
-              Terms of Service
-            </Link>
+          <div className="flex items-center gap-1">
+            Designed with{" "}
+            <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 animate-pulse" />{" "}
+            for the future.
           </div>
         </div>
       </div>

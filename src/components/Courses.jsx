@@ -2,214 +2,184 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { BookOpen, Clock, ArrowRight, Code, Server, Layout } from "lucide-react";
+
+const coursesData = [
+  {
+    id: 1,
+    title: "Ultimate Next.js 15 & Tailwind CSS v4 Masterclass",
+    category: "frontend",
+    description: "Build ultra-fast, SEO-optimized production apps with NextAuth, Server Actions, and dynamic routing.",
+    level: "Advanced",
+    duration: "18 Hours",
+    lessons: 42,
+    badge: "AI Recommended",
+    icon: <Layout className="w-6 h-6 text-blue-500" />
+  },
+  {
+    id: 2,
+    title: "Advanced Node.js, Express & MongoDB Architecture",
+    category: "backend",
+    description: "Master clean architecture, robust Role-Based Access Control (RBAC), JWT authentication, and secure APIs.",
+    level: "Intermediate",
+    duration: "22 Hours",
+    lessons: 56,
+    badge: "Popular",
+    icon: <Server className="w-6 h-6 text-emerald-500" />
+  },
+  {
+    id: 3,
+    title: "MERN Stack Full-Stack Learner Career Path",
+    category: "fullstack",
+    description: "Complete dynamic e-commerce and booking system development with TanStack Query and complex state optimization.",
+    level: "Beginner to Pro",
+    duration: "45 Hours",
+    lessons: 110,
+    badge: "Career Track",
+    icon: <Code className="w-6 h-6 text-purple-500" />
+  },
+  {
+    id: 4,
+    title: "React 19 & Dynamic UI/UX Design Systems",
+    category: "frontend",
+    description: "Design pixel-perfect layout structures, comfortable white-spaces, and strict border-radius systems.",
+    level: "Beginner",
+    duration: "14 Hours",
+    lessons: 30,
+    badge: "New",
+    icon: <Layout className="w-6 h-6 text-pink-500" />
+  },
+];
+
+const CATEGORIES = [
+  { id: "all", label: "All Paths" },
+  { id: "frontend", label: "Frontend" },
+  { id: "backend", label: "Backend" },
+  { id: "fullstack", label: "Fullstack" }
+];
 
 const Courses = () => {
-  // ডাইনামিক ফিল্টারিং এর জন্য স্টেট (Frontend / Backend)
   const [activeTab, setActiveTab] = useState("all");
 
-  // ডক ও প্রজেক্ট স্ট্রাকচার অনুযায়ী ডামি কোর্স ডাটা
-  const coursesData = [
-    {
-      id: 1,
-      title: "Ultimate Next.js 15 & Tailwind CSS v4 Masterclass",
-      category: "frontend",
-      description:
-        "Build ultra-fast, SEO-optimized production apps with NextAuth, Server Actions, and dynamic routing.",
-      level: "Advanced",
-      duration: "18 Hours",
-      lessons: 42,
-      badge: "AI Recommended",
-    },
-    {
-      id: 2,
-      title: "Advanced Node.js, Express & MongoDB Architecture",
-      category: "backend",
-      description:
-        "Master clean architecture, robust Role-Based Access Control (RBAC), JWT authentication, and secure APIs.",
-      level: "Intermediate",
-      duration: "22 Hours",
-      lessons: 56,
-      badge: "Popular",
-    },
-    {
-      id: 3,
-      title: "MERN Stack Full-Stack Learner Career Path",
-      category: "fullstack",
-      description:
-        "Complete dynamic e-commerce and booking system development with TanStack Query and complex state optimization.",
-      level: "Beginner to Pro",
-      duration: "45 Hours",
-      lessons: 110,
-      badge: "Career Track",
-    },
-    {
-      id: 4,
-      title: "React 19 & Dynamic UI/UX Design Systems",
-      category: "frontend",
-      description:
-        "Design pixel-perfect layout structures, comfortable white-spaces, and strict border-radius systems.",
-      level: "Beginner",
-      duration: "14 Hours",
-      lessons: 30,
-      badge: "New",
-    },
-  ];
-
-  // ট্যাব অনুযায়ী কোর্স ফিল্টার করার লজিক
-  const filteredCourses =
-    activeTab === "all"
-      ? coursesData
-      : coursesData.filter((course) => course.category === activeTab);
+  const filteredCourses = activeTab === "all"
+    ? coursesData
+    : coursesData.filter((course) => course.category === activeTab);
 
   return (
-    <div className="w-full bg-white dark:bg-slate-950 py-16 transition-colors duration-300">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-24 bg-secondary/20 relative overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        
         {/* HEADER SECTION */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <div className="max-w-2xl">
-            <span className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 tracking-wider uppercase">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4">
               Explore Programs
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-1">
+            </div>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-foreground mb-4 leading-tight">
               AI-Powered Hub &{" "}
-              <span className="bg-gradient-to-r from-indigo-600 to-violet-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 Smart Roadmaps
               </span>
             </h2>
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-2">
-              Select your path to access custom-tailored syllabus
-              recommendations, automated learning logs, and industry-standard
-              projects.
+            <p className="text-lg text-muted-foreground">
+              Select your path to access custom-tailored syllabus recommendations, automated learning logs, and industry-standard projects.
             </p>
           </div>
 
-          {/* TAB FILTERS (Frontend / Backend Classification) */}
-          <div className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-xl self-start md:self-auto">
-            <button
-              onClick={() => setActiveTab("all")}
-              className={`px-4 py-2 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 ${
-                activeTab === "all"
-                  ? "bg-white dark:bg-slate-800 text-indigo-600 dark:text-white shadow-sm"
-                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
-              }`}
-            >
-              All Paths
-            </button>
-            <button
-              onClick={() => setActiveTab("frontend")}
-              className={`px-4 py-2 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 ${
-                activeTab === "frontend"
-                  ? "bg-white dark:bg-slate-800 text-indigo-600 dark:text-white shadow-sm"
-                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
-              }`}
-            >
-              Frontend
-            </button>
-            <button
-              onClick={() => setActiveTab("backend")}
-              className={`px-4 py-2 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 ${
-                activeTab === "backend"
-                  ? "bg-white dark:bg-slate-800 text-indigo-600 dark:text-white shadow-sm"
-                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
-              }`}
-            >
-              Backend
-            </button>
+          {/* TAB FILTERS */}
+          <div className="flex flex-wrap items-center gap-2 p-1.5 glass-panel rounded-2xl self-start md:self-auto border border-border">
+            {CATEGORIES.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`relative px-5 py-2.5 text-sm font-semibold rounded-xl transition-colors ${
+                  activeTab === tab.id
+                    ? "text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                }`}
+              >
+                {activeTab === tab.id && (
+                  <motion.div
+                    layoutId="active-tab"
+                    className="absolute inset-0 bg-primary rounded-xl shadow-md"
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{tab.label}</span>
+              </button>
+            ))}
           </div>
         </div>
 
         {/* COURSES RESPONSIVE GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredCourses.map((course) => (
-            <div
-              key={course.id}
-              className="flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group"
-            >
-              {/* Card Top: Gradient Image Placeholder */}
-              <div className="h-44 w-full bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-6 flex flex-col justify-between relative overflow-hidden border-b border-slate-200 dark:border-slate-800">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-xl pointer-events-none"></div>
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <AnimatePresence mode="popLayout">
+            {filteredCourses.map((course, index) => (
+              <motion.div
+                key={course.id}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                className="flex flex-col bg-card border border-border rounded-3xl overflow-hidden group hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500"
+              >
+                {/* Card Top */}
+                <div className="h-40 w-full bg-secondary/50 p-6 flex flex-col justify-between relative overflow-hidden border-b border-border group-hover:bg-secondary transition-colors">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl pointer-events-none transition-transform group-hover:scale-150 duration-700"></div>
 
-                {/* Badge */}
-                <span className="self-start px-2.5 py-1 text-[11px] font-semibold tracking-wide text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-900 rounded-md shadow-sm border border-slate-100 dark:border-slate-800">
-                  {course.badge}
-                </span>
-
-                {/* Tech Mini Graphics */}
-                <div className="flex items-center gap-2 text-white/90 z-10">
-                  <div className="w-9 h-9 rounded-lg bg-white/10 backdrop-blur-md flex items-center justify-center text-sm font-bold">
-                    {course.category === "frontend"
-                      ? "FE"
-                      : course.category === "backend"
-                        ? "BE"
-                        : "FS"}
-                  </div>
-                  <span className="text-xs font-medium tracking-wider text-slate-300 uppercase">
-                    {course.category} program
+                  <span className="self-start px-3 py-1 text-xs font-bold tracking-wider text-primary bg-primary/10 rounded-lg backdrop-blur-sm border border-primary/20 uppercase">
+                    {course.badge}
                   </span>
-                </div>
-              </div>
 
-              {/* Card Body */}
-              <div className="p-6 flex flex-col flex-1 justify-between gap-6">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-xs font-semibold text-slate-400 dark:text-slate-500">
-                    <span>{course.level}</span>
-                    <span>•</span>
-                    <span>{course.duration}</span>
+                  <div className="flex items-center gap-3 relative z-10">
+                    <div className="w-10 h-10 rounded-xl bg-background shadow-sm border border-border flex items-center justify-center">
+                      {course.icon}
+                    </div>
+                    <span className="text-sm font-semibold text-foreground uppercase tracking-wider">
+                      {course.category}
+                    </span>
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200 line-clamp-2 leading-snug">
-                    {course.title}
-                  </h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
-                    {course.description}
-                  </p>
                 </div>
 
-                {/* Card Footer Action */}
-                <div className="pt-4 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                    <svg
-                      className="w-4 h-4 text-slate-400"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                      />
-                    </svg>
-                    <span>{course.lessons} Modules</span>
+                {/* Card Body */}
+                <div className="p-6 flex flex-col flex-1 justify-between gap-6">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-widest">
+                      <span>{course.level}</span>
+                      <span className="w-1 h-1 rounded-full bg-muted-foreground/50"></span>
+                      <span>{course.duration}</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight">
+                      {course.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
+                      {course.description}
+                    </p>
                   </div>
 
-                  <Link
-                    href={`/courses/${course.id}`}
-                    className="flex items-center gap-1 text-xs font-bold text-indigo-600 dark:text-indigo-400 group-hover:gap-2 transition-all"
-                  >
-                    <span>Enroll Now</span>
-                    <svg
-                      className="w-3.5 h-3.5"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      viewBox="0 0 24 24"
+                  {/* Card Footer */}
+                  <div className="pt-4 border-t border-border flex items-center justify-between gap-4 mt-auto">
+                    <div className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground">
+                      <BookOpen className="w-4 h-4" />
+                      <span>{course.lessons} Modules</span>
+                    </div>
+
+                    <Link
+                      href={`/courses/${course.id}`}
+                      className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 transform group-hover:scale-110"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </Link>
+                      <ArrowRight className="w-5 h-5" />
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 
