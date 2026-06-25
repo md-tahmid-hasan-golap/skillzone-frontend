@@ -4,15 +4,15 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { 
-  LayoutDashboard, 
-  BookOpen, 
-  UserCircle, 
-  BarChart, 
-  Users, 
-  Settings, 
+import {
+  LayoutDashboard,
+  BookOpen,
+  UserCircle,
+  BarChart,
+  Users,
   BookMarked,
-  ShieldAlert
+  ShieldAlert,
+  Briefcase,
 } from "lucide-react";
 
 const getLinksForRole = (role) => {
@@ -22,14 +22,23 @@ const getLinksForRole = (role) => {
         { name: "Overview", path: "/dashboard", icon: LayoutDashboard },
         { name: "Analytics", path: "/dashboard/analytics", icon: BarChart },
         { name: "Manage Users", path: "/dashboard/manage-users", icon: Users },
-        { name: "Manage Courses", path: "/dashboard/manage-courses", icon: BookMarked },
-        { name: "Settings", path: "/dashboard/settings", icon: Settings },
+        {
+          name: "Add Courses",
+          path: "/dashboard/admin/courses",
+          icon: BookMarked,
+        },
         { name: "Profile", path: "/dashboard/profile", icon: UserCircle },
       ];
     case "manager":
       return [
         { name: "Overview", path: "/dashboard", icon: LayoutDashboard },
-        { name: "Reports", path: "/dashboard/reports", icon: BarChart },
+        { name: "My Courses", path: "/dashboard/manager/my-courses", icon: BookOpen },
+        {
+          name: "Approvals",
+          path: "/dashboard/manager/approvals",
+          icon: Briefcase,
+        },
+
         { name: "Users", path: "/dashboard/users", icon: Users },
         { name: "Profile", path: "/dashboard/profile", icon: UserCircle },
       ];
@@ -53,7 +62,9 @@ const Sidebar = ({ role }) => {
       <div className="h-16 flex items-center px-6 border-b border-border">
         <Link href="/" className="flex items-center gap-2 group">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-md">
-            <span className="text-white font-bold text-lg leading-none group-hover:scale-110 transition-transform">S</span>
+            <span className="text-white font-bold text-lg leading-none group-hover:scale-110 transition-transform">
+              S
+            </span>
           </div>
           <span className="font-extrabold text-xl tracking-tight text-foreground">
             SkillZone <span className="text-indigo-500">AI</span>
@@ -80,8 +91,8 @@ const Sidebar = ({ role }) => {
               key={link.path}
               href={link.path}
               className={`relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                isActive 
-                  ? "text-indigo-600 dark:text-indigo-400" 
+                isActive
+                  ? "text-indigo-600 dark:text-indigo-400"
                   : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
               }`}
             >
@@ -104,8 +115,13 @@ const Sidebar = ({ role }) => {
       <div className="p-4 border-t border-border">
         <div className="p-4 rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/10 border border-indigo-500/20">
           <h4 className="text-sm font-bold text-foreground mb-1">Need Help?</h4>
-          <p className="text-[11px] text-muted-foreground mb-3 leading-snug">Check our documentation or contact support.</p>
-          <Link href="/contact" className="block text-center text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg py-2 transition-colors">
+          <p className="text-[11px] text-muted-foreground mb-3 leading-snug">
+            Check our documentation or contact support.
+          </p>
+          <Link
+            href="/contact"
+            className="block text-center text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg py-2 transition-colors"
+          >
             Contact Support
           </Link>
         </div>

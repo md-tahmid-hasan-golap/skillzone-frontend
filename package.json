@@ -17,8 +17,10 @@
     "next": "16.2.9",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "react-hook-form": "^7.80.0",
     "react-responsive-carousel": "^3.2.23",
     "recharts": "^3.9.0",
+    "sweetalert2": "^11.26.25",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
