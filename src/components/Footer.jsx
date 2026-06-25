@@ -2,9 +2,17 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Mail, MapPin, Phone, Sparkles, Heart } from "lucide-react";
 
 const Footer = () => {
+  const pathname = usePathname();
+
+  // Hide Footer on dashboard routes
+  if (pathname?.startsWith("/dashboard")) {
+    return null;
+  }
+
   return (
     <footer className="bg-slate-950 text-slate-200 border-t border-slate-900 relative overflow-hidden">
       {/* Decorative Blur Orbs */}

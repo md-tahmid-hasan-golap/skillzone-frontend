@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X, Sparkles, LayoutDashboard } from "lucide-react";
 
 const NAV_LINKS = [
   { name: "Home", path: "/" },
@@ -17,6 +17,11 @@ const NAV_LINKS = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+
+  // Hide Navbar on dashboard routes
+  if (pathname?.startsWith("/dashboard")) {
+    return null;
+  }
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-xl border-b border-border shadow-sm transition-colors duration-300">
@@ -74,7 +79,18 @@ const Navbar = () => {
               </SignUpButton>
             </Show>
             <Show when="signed-in">
-              <UserButton afterSignOutUrl="/" appearance={{ elements: { userButtonAvatarBox: "w-9 h-9 border border-border" } }} />
+              <Link href="/dashboard" className="px-4 py-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors">
+                Dashboard
+              </Link>
+              <UserButton afterSignOutUrl="/" appearance={{ elements: { userButtonAvatarBox: "w-9 h-9 border border-border shadow-sm" } }}>
+                <UserButton.MenuItems>
+                  <UserButton.Link
+                    label="Go to Dashboard"
+                    labelIcon={<LayoutDashboard className="w-4 h-4" />}
+                    href="/dashboard"
+                  />
+                </UserButton.MenuItems>
+              </UserButton>
             </Show>
           </div>
 
@@ -137,8 +153,25 @@ const Navbar = () => {
                   </SignUpButton>
                 </Show>
                 <Show when="signed-in">
-                  <div className="flex justify-center py-2">
-                    <UserButton afterSignOutUrl="/" />
+                  <div className="flex flex-col items-center gap-3 py-2">
+                    <Link
+                      href="/dashboard"
+                      onClick={() => setIsOpen(false)}
+                      className="w-full px-4 py-3 text-sm font-bold text-center text-primary-foreground bg-primary rounded-lg shadow-md hover:bg-primary/90 transition-all"
+                    >
+                      Dashboard
+                    </Link>
+                    <div className="mt-2">
+                      <UserButton afterSignOutUrl="/" appearance={{ elements: { userButtonAvatarBox: "w-10 h-10 border border-border shadow-sm" } }}>
+                        <UserButton.MenuItems>
+                          <UserButton.Link
+                            label="Go to Dashboard"
+                            labelIcon={<LayoutDashboard className="w-4 h-4" />}
+                            href="/dashboard"
+                          />
+                        </UserButton.MenuItems>
+                      </UserButton>
+                    </div>
                   </div>
                 </Show>
               </div>
