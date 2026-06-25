@@ -3,52 +3,63 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen, Clock, ArrowRight, Code, Server, Layout } from "lucide-react";
+import {
+  BookOpen,
+  Clock,
+  ArrowRight,
+  Code,
+  Server,
+  Layout,
+} from "lucide-react";
 
 const coursesData = [
   {
     id: 1,
     title: "Ultimate Next.js 15 & Tailwind CSS v4 Masterclass",
     category: "frontend",
-    description: "Build ultra-fast, SEO-optimized production apps with NextAuth, Server Actions, and dynamic routing.",
+    description:
+      "Build ultra-fast, SEO-optimized production apps with NextAuth, Server Actions, and dynamic routing.",
     level: "Advanced",
     duration: "18 Hours",
     lessons: 42,
     badge: "AI Recommended",
-    icon: <Layout className="w-6 h-6 text-blue-500" />
+    icon: <Layout className="w-6 h-6 text-blue-500" />,
   },
   {
     id: 2,
     title: "Advanced Node.js, Express & MongoDB Architecture",
     category: "backend",
-    description: "Master clean architecture, robust Role-Based Access Control (RBAC), JWT authentication, and secure APIs.",
+    description:
+      "Master clean architecture, robust Role-Based Access Control (RBAC), JWT authentication, and secure APIs.",
     level: "Intermediate",
     duration: "22 Hours",
     lessons: 56,
     badge: "Popular",
-    icon: <Server className="w-6 h-6 text-emerald-500" />
+    icon: <Server className="w-6 h-6 text-emerald-500" />,
   },
   {
     id: 3,
     title: "MERN Stack Full-Stack Learner Career Path",
     category: "fullstack",
-    description: "Complete dynamic e-commerce and booking system development with TanStack Query and complex state optimization.",
+    description:
+      "Complete dynamic e-commerce and booking system development with TanStack Query and complex state optimization.",
     level: "Beginner to Pro",
     duration: "45 Hours",
     lessons: 110,
     badge: "Career Track",
-    icon: <Code className="w-6 h-6 text-purple-500" />
+    icon: <Code className="w-6 h-6 text-purple-500" />,
   },
   {
     id: 4,
     title: "React 19 & Dynamic UI/UX Design Systems",
     category: "frontend",
-    description: "Design pixel-perfect layout structures, comfortable white-spaces, and strict border-radius systems.",
+    description:
+      "Design pixel-perfect layout structures, comfortable white-spaces, and strict border-radius systems.",
     level: "Beginner",
     duration: "14 Hours",
     lessons: 30,
     badge: "New",
-    icon: <Layout className="w-6 h-6 text-pink-500" />
+    icon: <Layout className="w-6 h-6 text-pink-500" />,
   },
 ];
 
@@ -56,20 +67,20 @@ const CATEGORIES = [
   { id: "all", label: "All Paths" },
   { id: "frontend", label: "Frontend" },
   { id: "backend", label: "Backend" },
-  { id: "fullstack", label: "Fullstack" }
+  { id: "fullstack", label: "Fullstack" },
 ];
 
 const Courses = () => {
   const [activeTab, setActiveTab] = useState("all");
 
-  const filteredCourses = activeTab === "all"
-    ? coursesData
-    : coursesData.filter((course) => course.category === activeTab);
+  const filteredCourses =
+    activeTab === "all"
+      ? coursesData
+      : coursesData.filter((course) => course.category === activeTab);
 
   return (
     <section className="py-24 bg-secondary/20 relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        
         {/* HEADER SECTION */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <div className="max-w-2xl">
@@ -83,7 +94,9 @@ const Courses = () => {
               </span>
             </h2>
             <p className="text-lg text-muted-foreground">
-              Select your path to access custom-tailored syllabus recommendations, automated learning logs, and industry-standard projects.
+              Select your path to access custom-tailored syllabus
+              recommendations, automated learning logs, and industry-standard
+              projects.
             </p>
           </div>
 
@@ -113,7 +126,10 @@ const Courses = () => {
         </div>
 
         {/* COURSES RESPONSIVE GRID */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
           <AnimatePresence mode="popLayout">
             {filteredCourses.map((course, index) => (
               <motion.div
