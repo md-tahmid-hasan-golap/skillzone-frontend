@@ -17,18 +17,13 @@ const UserSync = () => {
 
     const syncUser = async () => {
       try {
-        const role = (user.publicMetadata?.role as string) ?? "user";
-
+        // 💡 ফ্রন্টএন্ড থেকে রোল পাঠানো বন্ধ করা হলো, যাতে ব্যাকএন্ড ডাটাবেজের রোল অক্ষত রাখে
         const payload = {
           clerkId: user.id,
           email: user.primaryEmailAddress?.emailAddress ?? "",
           name: user.fullName ?? "",
-          role,
         };
 
-        // 💡 ডাইনামিক ইউআরএল সিলেকশন:
-        // ব্রাউজারের উইন্ডো যদি localhost বা 127.0.0.1 হয়, তবে সে .env থেকে লোকাল ইউআরএল নিবে।
-        // আর লাইভ ভেরসেলে থাকলে সরাসরি আপনার লাইভ ব্যাকএন্ড ইউআরএল নিবে।
         const isLocalhost = 
           typeof window !== "undefined" && 
           (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
