@@ -1,0 +1,24 @@
+
+> skillzone-frontend@0.1.0 build
+> next build
+
+▲ Next.js 16.2.9 (Turbopack)
+- Environments: .env
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.0s
+  Running TypeScript ...
+Failed to type check.
+
+./src/app/dashboard/layout.tsx:9:43
+Type error: Binding element 'children' implicitly has an 'any' type.
+
+  [90m 7 |[0m };
+  [90m 8 |[0m
+[31m[1m>[0m [90m 9 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mDashboardLayout[0m({ children }) {
+  [90m   |[0m                                           [31m[1m^[0m
+  [90m10 |[0m   [36mreturn[0m (
+  [90m11 |[0m     <[33mDashboardWrapper[0m>
+  [90m12 |[0m       {children}
+Next.js build worker exited with code: 1 and signal: null

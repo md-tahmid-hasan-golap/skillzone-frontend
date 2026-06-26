@@ -1,0 +1,5 @@
+src/app/dashboard/manager/approvals/page.tsx(95,27): error TS2322: Type 'string' is not assignable to type 'number'.
+src/app/dashboard/profile/page.tsx(17,25): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/app/dashboard/profile/page.tsx(21,23): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/app/dashboard/profile/page.tsx(52,150): error TS2339: Property 'style' does not exist on type 'EventTarget'.
+src/app/dashboard/profile/page.tsx(157,17): error TS2322: Type 'string' is not assignable to type 'number'.

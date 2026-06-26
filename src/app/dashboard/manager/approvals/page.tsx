@@ -10,22 +10,37 @@ export default function ManagerApprovalsPage() {
 
   // Mock data for pending approvals
   const pendingCourses = [
-    { id: 1, title: "Advanced Node.js Scaling", instructor: "Alice Smith", status: "Pending Review", submittedAt: "2 hours ago" },
-    { id: 2, title: "UI/UX Foundations", instructor: "John Doe", status: "Pending Review", submittedAt: "5 hours ago" },
+    {
+      id: 1,
+      title: "Advanced Node.js Scaling",
+      instructor: "Alice Smith",
+      status: "Pending Review",
+      submittedAt: "2 hours ago",
+    },
+    {
+      id: 2,
+      title: "UI/UX Foundations",
+      instructor: "John Doe",
+      status: "Pending Review",
+      submittedAt: "5 hours ago",
+    },
   ];
 
   return (
     <RoleGuard allowedRoles={["manager", "admin"]}>
       <div className="max-w-6xl mx-auto space-y-8">
-        
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-foreground tracking-tight">Content Moderation & Approvals</h1>
-            <p className="text-sm text-muted-foreground mt-1">Review pending courses and publish approved content to the platform.</p>
+            <h1 className="text-2xl font-bold text-foreground tracking-tight">
+              Content Moderation & Approvals
+            </h1>
+            <p className="text-sm text-muted-foreground mt-1">
+              Review pending courses and publish approved content to the platform.
+            </p>
           </div>
-          
-          <button 
+
+          <button
             onClick={() => setShowForm(!showForm)}
             className="px-6 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl shadow-md transition-all flex items-center gap-2"
           >
@@ -77,22 +92,31 @@ export default function ManagerApprovalsPage() {
                       <td className="px-6 py-4 text-muted-foreground">{course.instructor}</td>
                       <td className="px-6 py-4 text-muted-foreground">{course.submittedAt}</td>
                       <td className="px-6 py-4 flex items-center justify-end gap-2">
-                        <button className="p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-lg transition-colors tooltip" title="Review Content">
+                        <button
+                          className="p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-lg transition-colors tooltip"
+                          title="Review Content"
+                        >
                           <Eye className="w-5 h-5" />
                         </button>
-                        <button className="p-2 text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 rounded-lg transition-colors" title="Approve">
+                        <button
+                          className="p-2 text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 rounded-lg transition-colors"
+                          title="Approve"
+                        >
                           <CheckCircle className="w-5 h-5" />
                         </button>
-                        <button className="p-2 text-destructive hover:bg-destructive/10 rounded-lg transition-colors" title="Reject">
+                        <button
+                          className="p-2 text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
+                          title="Reject"
+                        >
                           <XCircle className="w-5 h-5" />
                         </button>
                       </td>
                     </tr>
                   ))}
-                  
+
                   {pendingCourses.length === 0 && (
                     <tr>
-                      <td colSpan="4" className="px-6 py-12 text-center text-muted-foreground">
+                      <td colSpan={4} className="px-6 py-12 text-center text-muted-foreground">
                         No pending courses in the queue.
                       </td>
                     </tr>
@@ -102,7 +126,6 @@ export default function ManagerApprovalsPage() {
             </div>
           </div>
         )}
-
       </div>
     </RoleGuard>
   );

@@ -11,14 +11,14 @@ export default function DashboardProfile() {
     email: "hello@skillzone.ai",
     phone: "+880 1700 000000",
     location: "Rajshahi, Bangladesh",
-    bio: "Passionate Full Stack Developer and AI Enthusiast."
+    bio: "Passionate Full Stack Developer and AI Enthusiast.",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSave = (e) => {
+  const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSaving(true);
     // Simulate API call
@@ -30,14 +30,14 @@ export default function DashboardProfile() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      
       <div>
         <h1 className="text-2xl font-bold text-foreground tracking-tight">My Profile</h1>
-        <p className="text-sm text-muted-foreground">Manage your personal information and preferences.</p>
+        <p className="text-sm text-muted-foreground">
+          Manage your personal information and preferences.
+        </p>
       </div>
 
       <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden">
-        
         {/* Cover Photo Area */}
         <div className="h-32 bg-gradient-to-r from-indigo-500 to-violet-500 w-full relative">
           <button className="absolute bottom-3 right-3 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white p-2 rounded-full transition-colors">
@@ -49,8 +49,17 @@ export default function DashboardProfile() {
         <div className="px-6 sm:px-8 relative -mt-12 mb-6 flex justify-between items-end">
           <div className="relative inline-block">
             <div className="w-24 h-24 rounded-full border-4 border-card bg-secondary flex items-center justify-center text-3xl font-bold text-primary shadow-md overflow-hidden">
-              <img src="https://github.com/md-tahmid-hasan-golap.png" alt="Profile" className="w-full h-full object-cover" onError={(e) => {e.target.style.display='none'}} />
-              <span className="absolute inset-0 flex items-center justify-center -z-10 bg-indigo-100 dark:bg-indigo-900/50">TH</span>
+              <img
+                src="https://github.com/md-tahmid-hasan-golap.png"
+                alt="Profile"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
+              />
+              <span className="absolute inset-0 flex items-center justify-center -z-10 bg-indigo-100 dark:bg-indigo-900/50">
+                TH
+              </span>
             </div>
             <button className="absolute bottom-0 right-0 bg-primary text-primary-foreground p-1.5 rounded-full border-2 border-card shadow-sm hover:scale-105 transition-transform">
               <Camera className="w-3.5 h-3.5" />
@@ -61,7 +70,6 @@ export default function DashboardProfile() {
         {/* Form */}
         <form onSubmit={handleSave} className="px-6 sm:px-8 pb-8 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
             {/* First Name */}
             <div className="space-y-2">
               <label className="text-sm font-semibold text-foreground">First Name</label>
@@ -69,8 +77,8 @@ export default function DashboardProfile() {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <User className="w-4 h-4 text-muted-foreground" />
                 </div>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleChange}
@@ -86,8 +94,8 @@ export default function DashboardProfile() {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <User className="w-4 h-4 text-muted-foreground" />
                 </div>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleChange}
@@ -103,8 +111,8 @@ export default function DashboardProfile() {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Mail className="w-4 h-4 text-muted-foreground" />
                 </div>
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
@@ -120,8 +128,8 @@ export default function DashboardProfile() {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Phone className="w-4 h-4 text-muted-foreground" />
                 </div>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
@@ -137,8 +145,8 @@ export default function DashboardProfile() {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <MapPin className="w-4 h-4 text-muted-foreground" />
                 </div>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   name="location"
                   value={formData.location}
                   onChange={handleChange}
@@ -150,20 +158,19 @@ export default function DashboardProfile() {
             {/* Bio */}
             <div className="space-y-2 md:col-span-2">
               <label className="text-sm font-semibold text-foreground">Bio</label>
-              <textarea 
+              <textarea
                 name="bio"
                 value={formData.bio}
                 onChange={handleChange}
-                rows="4"
+                rows={4}
                 className="w-full p-3 bg-background border border-input rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all resize-none"
               ></textarea>
             </div>
-            
           </div>
 
           <div className="pt-4 flex justify-end">
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={isSaving}
               className="px-6 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl shadow-md transition-all flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >

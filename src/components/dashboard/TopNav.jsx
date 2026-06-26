@@ -1,18 +1,28 @@
 "use client";
 
 import React from "react";
-import { UserButton } from "@clerk/nextjs";
-import { Menu, UserCircle } from "lucide-react";
+import { useUser, UserButton } from "@clerk/nextjs";
+import { Menu, UserCircle, ShieldCheck } from "lucide-react";
 
-const TopNav = ({ role, setRole, toggleMobileMenu }) => {
+// ─── Role badge label config ───────────────────────────────────────────────────
+const roleConfig = {
+  admin: { label: "Admin", className: "bg-red-500/10 text-red-500 border-red-500/20" },
+  manager: { label: "Manager", className: "bg-amber-500/10 text-amber-500 border-amber-500/20" },
+  user: { label: "User", className: "bg-indigo-500/10 text-indigo-500 border-indigo-500/20" },
+};
+
+const TopNav = ({ role, toggleMobileMenu }) => {
+  const { user } = useUser();
+  const config = roleConfig[role] ?? roleConfig.user;
+
   return (
     <header className="h-16 bg-card border-b border-border flex items-center justify-between px-4 sm:px-6 z-10 sticky top-0">
-      
-      {/* Mobile Menu Toggle & Title */}
+      {/* Left: Mobile toggle + title */}
       <div className="flex items-center gap-4">
-        <button 
+        <button
           onClick={toggleMobileMenu}
           className="lg:hidden p-2 -ml-2 text-muted-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors"
+          aria-label="Open menu"
         >
           <Menu className="w-5 h-5" />
         </button>
@@ -21,33 +31,35 @@ const TopNav = ({ role, setRole, toggleMobileMenu }) => {
         </h2>
       </div>
 
-      <div className="flex items-center gap-4">
-        {/* Temporary Role Switcher for Testing */}
-        <div className="flex items-center gap-2 bg-secondary/50 px-3 py-1.5 rounded-lg border border-border">
-          <span className="text-xs font-medium text-muted-foreground hidden sm:inline-block">Simulate Role:</span>
-          <select 
-            value={role} 
-            onChange={(e) => setRole(e.target.value)}
-            className="bg-transparent text-sm font-semibold text-foreground focus:outline-none cursor-pointer"
-          >
-            <option value="user">User</option>
-            <option value="manager">Manager</option>
-            <option value="admin">Admin</option>
-          </select>
+      {/* Right: Role badge + Clerk User Menu */}
+      <div className="flex items-center gap-3">
+        {/* Live Role Badge */}
+        <div
+          className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-semibold ${config.className}`}
+        >
+          <ShieldCheck className="w-3.5 h-3.5" />
+          {config.label}
         </div>
 
-        {/* Clerk User Profile */}
-        <div className="pl-4 border-l border-border flex items-center gap-3">
-          <UserButton 
+        {/* Greeting */}
+        {user && (
+          <span className="hidden md:block text-sm text-muted-foreground font-medium">
+            Hi, <span className="text-foreground font-semibold">{user.firstName ?? "there"}</span>
+          </span>
+        )}
+
+        {/* Clerk UserButton — has built-in Profile + Sign Out */}
+        <div className="pl-3 border-l border-border flex items-center">
+          <UserButton
             afterSignOutUrl="/"
-            appearance={{ 
-              elements: { 
+            appearance={{
+              elements: {
                 userButtonAvatarBox: "w-9 h-9 border border-border shadow-sm",
-                userButtonPopoverCard: "shadow-xl border border-border bg-card"
-              } 
+                userButtonPopoverCard: "shadow-xl border border-border bg-card",
+              },
             }}
           >
-            {/* Custom Link to our Dashboard Profile Page */}
+            {/* Extra "Dashboard Profile" link injected into Clerk's dropdown */}
             <UserButton.MenuItems>
               <UserButton.Link
                 label="Dashboard Profile"

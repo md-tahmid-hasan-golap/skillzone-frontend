@@ -6,10 +6,6 @@ export const metadata = {
   description: "Manage your SkillZone AI account.",
 };
 
-export default function DashboardLayout({ children }) {
-  return (
-    <DashboardWrapper>
-      {children}
-    </DashboardWrapper>
-  );
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  return <DashboardWrapper>{children}</DashboardWrapper>;
 }

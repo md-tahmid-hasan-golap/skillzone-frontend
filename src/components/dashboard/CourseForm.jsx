@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import UseAxiosSecure from "@/UseAxiosSecure/UseAxiosSecure";
 import Swal from "sweetalert2";
+import AIContentGenerator from "../AIContentGenerator";
 
 export default function CourseForm() {
   const axiosSecure = UseAxiosSecure();
@@ -81,8 +82,7 @@ export default function CourseForm() {
     } catch (error) {
       console.error(error);
       const errorMsg =
-        error.response?.data?.message ||
-        "Failed to create course. Please try again.";
+        error.response?.data?.message || "Failed to create course. Please try again.";
 
       // ব্যর্থ অ্যালার্ট
       Swal.fire({
@@ -112,9 +112,7 @@ export default function CourseForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
           {/* Title */}
           <div className="space-y-2 md:col-span-2">
-            <label className="text-sm font-semibold text-foreground">
-              Course Title *
-            </label>
+            <label className="text-sm font-semibold text-foreground">Course Title *</label>
             <input
               type="text"
               placeholder="e.g., Complete Full Stack Web Development Bootcamp"
@@ -125,9 +123,7 @@ export default function CourseForm() {
 
           {/* Description */}
           <div className="space-y-2 md:col-span-2">
-            <label className="text-sm font-semibold text-foreground">
-              Description *
-            </label>
+            <label className="text-sm font-semibold text-foreground">Description *</label>
             <textarea
               rows="4"
               placeholder="Write a compelling description for this course..."
@@ -136,11 +132,14 @@ export default function CourseForm() {
             ></textarea>
           </div>
 
+          {/* AI Content Generator Tool */}
+          <div className="md:col-span-2">
+            <AIContentGenerator />
+          </div>
+
           {/* Category */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-foreground">
-              Category *
-            </label>
+            <label className="text-sm font-semibold text-foreground">Category *</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Briefcase className="w-4 h-4 text-muted-foreground" />
@@ -156,9 +155,7 @@ export default function CourseForm() {
 
           {/* Cover Image URL */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-foreground">
-              Cover Image URL *
-            </label>
+            <label className="text-sm font-semibold text-foreground">Cover Image URL *</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <ImageIcon className="w-4 h-4 text-muted-foreground" />
@@ -174,9 +171,7 @@ export default function CourseForm() {
 
           {/* Instructor Name */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-foreground">
-              Instructor Name *
-            </label>
+            <label className="text-sm font-semibold text-foreground">Instructor Name *</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Users className="w-4 h-4 text-muted-foreground" />
@@ -192,9 +187,7 @@ export default function CourseForm() {
 
           {/* Difficulty Level */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-foreground">
-              Difficulty Level *
-            </label>
+            <label className="text-sm font-semibold text-foreground">Difficulty Level *</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Award className="w-4 h-4 text-muted-foreground" />
@@ -206,18 +199,14 @@ export default function CourseForm() {
                 <option value="Beginner">Beginner</option>
                 <option value="Intermediate">Intermediate</option>
                 <option value="Advanced">Advanced</option>
-                <option value="Beginner to Advanced">
-                  Beginner to Advanced
-                </option>
+                <option value="Beginner to Advanced">Beginner to Advanced</option>
               </select>
             </div>
           </div>
 
           {/* Price */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-foreground">
-              Price (TK) *
-            </label>
+            <label className="text-sm font-semibold text-foreground">Price (TK) *</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <DollarSign className="w-4 h-4 text-muted-foreground" />
@@ -235,9 +224,7 @@ export default function CourseForm() {
 
           {/* Duration */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-foreground">
-              Duration *
-            </label>
+            <label className="text-sm font-semibold text-foreground">Duration *</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Clock className="w-4 h-4 text-muted-foreground" />
@@ -253,9 +240,7 @@ export default function CourseForm() {
 
           {/* Total Lessons */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-foreground">
-              Total Lessons *
-            </label>
+            <label className="text-sm font-semibold text-foreground">Total Lessons *</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <BookOpen className="w-4 h-4 text-muted-foreground" />
@@ -272,9 +257,7 @@ export default function CourseForm() {
 
           {/* Initial Rating */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-foreground">
-              Initial Rating *
-            </label>
+            <label className="text-sm font-semibold text-foreground">Initial Rating *</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Star className="w-4 h-4 text-muted-foreground" />
@@ -308,8 +291,7 @@ export default function CourseForm() {
               />
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              These will appear as individual modules on the course details
-              page.
+              These will appear as individual modules on the course details page.
             </p>
           </div>
         </div>
