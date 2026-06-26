@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { Loader2, ShieldX } from "lucide-react";
+import { ShieldX } from "lucide-react";
+import { useRole } from "./DashboardWrapper";
 
 /**
- * RoleGuard — client-side guard that reads the real role from Clerk publicMetadata.
+ * RoleGuard — client-side guard that reads the real role from DashboardWrapper context.
  *
  * Usage:
  *   <RoleGuard allowedRoles={["admin"]}>
@@ -14,27 +14,17 @@ import { Loader2, ShieldX } from "lucide-react";
  *   </RoleGuard>
  */
 const RoleGuard = ({ allowedRoles, children }) => {
-  const { isLoaded, user } = useUser();
+  const role = useRole();
   const router = useRouter();
 
-  // Clerk is still initializing
-  if (!isLoaded) {
-    return (
-      <div className="w-full h-[60vh] flex flex-col items-center justify-center gap-4">
-        <Loader2 className="w-8 h-8 text-primary animate-spin" />
-        <p className="text-sm text-muted-foreground font-medium animate-pulse">
-          Verifying permissions...
-        </p>
-      </div>
-    );
-  }
-
-  const role = user?.publicMetadata?.role ?? "user";
+  // The DashboardWrapper already handles the loading state for `role` before rendering children.
+  // So by the time this renders, `role` should be the final resolved string.
+  
   const isAuthorized = allowedRoles.includes(role);
 
   if (!isAuthorized) {
     return (
-      <div className="w-full h-[60vh] flex flex-col items-center justify-center gap-4 text-center px-4">
+      <div className="w-full h-[60vh] flex flex-col items-center justify-center gap-4 text-center px-4 animate-in fade-in zoom-in-95 duration-500">
         <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center">
           <ShieldX className="w-8 h-8 text-red-500" />
         </div>
@@ -49,7 +39,7 @@ const RoleGuard = ({ allowedRoles, children }) => {
         </div>
         <button
           onClick={() => router.replace("/dashboard")}
-          className="mt-2 px-6 py-2 text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-colors"
+          className="mt-2 px-6 py-2 text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-colors shadow-sm"
         >
           Go to Overview
         </button>

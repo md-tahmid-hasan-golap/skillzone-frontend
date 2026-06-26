@@ -1,9 +1,10 @@
 import React from "react";
+import MyCourses from "../../../../components/MyCourses";
 
 const page = () => {
   return (
     <div>
-      <h2>hi</h2>
+      <MyCourses />
     </div>
   );
 };

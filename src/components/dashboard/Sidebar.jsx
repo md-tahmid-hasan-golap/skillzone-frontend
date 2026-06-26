@@ -30,12 +30,12 @@ const getLinksForRole = (role) => {
         },
         {
           name: "Create Course",
-          path: "/dashboard/admin/courses/create",
+          path: "/dashboard/courses/create",
           icon: BookOpen,
         },
         {
           name: "My Courses",
-          path: "/dashboard/admin/my-courses",
+          path: "/dashboard/courses/my",
           icon: Briefcase,
         },
         { name: "Manage Users", path: "/dashboard/admin/users", icon: Users },
@@ -51,12 +51,12 @@ const getLinksForRole = (role) => {
         { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
         {
           name: "Create Course",
-          path: "/dashboard/manager/courses/create",
+          path: "/dashboard/courses/create",
           icon: BookOpen,
         },
         {
           name: "My Courses",
-          path: "/dashboard/manager/my-courses",
+          path: "/dashboard/courses/my",
           icon: Briefcase,
         },
         {
