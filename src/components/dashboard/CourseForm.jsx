@@ -19,7 +19,7 @@ import UseAxiosSecure from "@/UseAxiosSecure/UseAxiosSecure";
 import Swal from "sweetalert2";
 import AIContentGenerator from "../AIContentGenerator";
 
-export default function CourseForm() {
+export default function CourseForm({ initialData = null, onSuccess }) {
   const axiosSecure = UseAxiosSecure();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -30,7 +30,7 @@ export default function CourseForm() {
     reset,
     formState: { errors },
   } = useForm({
-    defaultValues: {
+    defaultValues: initialData || {
       title: "",
       category: "",
       description: "",
@@ -58,31 +58,35 @@ export default function CourseForm() {
         price: parseFloat(data.price) || 0,
         lessons: parseInt(data.lessons) || 0,
         enrolledStudents: parseInt(data.enrolledStudents) || 0,
-        tags: data.tags
-          .split(",")
-          .map((t) => t.trim())
-          .filter((t) => t !== ""),
+        tags: Array.isArray(data.tags) ? data.tags : (data.tags || "").split(",").map((t) => t.trim()),
       };
 
-      // API কল
-      await axiosSecure.post("/skills", payload);
+      if (initialData && initialData._id) {
+        await axiosSecure.put(`/skills/${initialData._id}`, payload);
+        Swal.fire({
+          title: "Course Updated!",
+          text: "Course has been updated successfully.",
+          icon: "success",
+          confirmButtonColor: "#4f46e5",
+        });
+      } else {
+        await axiosSecure.post("/skills", payload);
+        Swal.fire({
+          title: "Course Created!",
+          text: "New course has been added successfully.",
+          icon: "success",
+          confirmButtonColor: "#4f46e5",
+        });
+        reset();
+      }
 
-      // সফল অ্যালার্ট
-      Swal.fire({
-        title: "Success!",
-        text: "Course successfully created and published!",
-        icon: "success",
-        confirmButtonColor: "#4f46e5",
-        background: "var(--background)",
-        color: "var(--foreground)",
-      });
-
-      // ফর্ম রিসেট
-      reset();
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (error) {
       console.error(error);
       const errorMsg =
-        error.response?.data?.message || "Failed to create course. Please try again.";
+        error.response?.data?.message || "Failed to process course. Please try again.";
 
       // ব্যর্থ অ্যালার্ট
       Swal.fire({
@@ -103,8 +107,11 @@ export default function CourseForm() {
       <div className="p-6 border-b border-border bg-muted/20">
         <h2 className="text-lg font-semibold flex items-center gap-2">
           <PlusCircle className="w-5 h-5 text-primary" />
-          Course Details Form
+          {initialData ? "Update Course Details" : "Create New Course"}
         </h2>
+        <p className="text-muted-foreground mt-2 text-sm leading-relaxed max-w-2xl">
+          {initialData ? "Edit the existing details of the course." : "Fill out the information below to add a new course to the platform."}
+        </p>
       </div>
 
       {/* Form সাবমিশন React Hook Form এর handleSubmit দিয়ে র‍্যাপ করা হয়েছে */}
@@ -303,11 +310,16 @@ export default function CourseForm() {
             className="px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl shadow-md transition-all flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {isSubmitting ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
+              <span className="flex items-center gap-2">
+                <Loader2 className="w-5 h-5 animate-spin" />
+                {initialData ? "Updating Course..." : "Publishing Course..."}
+              </span>
             ) : (
-              <PlusCircle className="w-5 h-5" />
+              <span className="flex items-center gap-2">
+                <PlusCircle className="w-5 h-5" />
+                {initialData ? "Update Course" : "Publish Course"}
+              </span>
             )}
-            {isSubmitting ? "Publishing..." : "Publish Course"}
           </button>
         </div>
       </form>

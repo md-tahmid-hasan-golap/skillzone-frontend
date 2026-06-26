@@ -26,7 +26,8 @@ const UserSync = () => {
           role,
         };
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const res = await fetch(`${apiUrl}/user`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),

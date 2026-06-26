@@ -1,32 +1,65 @@
 "use client";
 
 import React, { useState } from "react";
-import { User, Mail, Phone, MapPin, Save, Camera } from "lucide-react";
+import { User, Mail, Phone, MapPin, Save, Camera, Loader2 } from "lucide-react";
+import UseAxiosSecure from "@/UseAxiosSecure/UseAxiosSecure";
+import { useUser } from "@clerk/nextjs";
+import Swal from "sweetalert2";
 
 export default function DashboardProfile() {
+  const { user, isLoaded } = useUser();
+  const axiosSecure = UseAxiosSecure();
   const [isSaving, setIsSaving] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: "Tahmid",
-    lastName: "Hasan",
-    email: "hello@skillzone.ai",
-    phone: "+880 1700 000000",
-    location: "Rajshahi, Bangladesh",
-    bio: "Passionate Full Stack Developer and AI Enthusiast.",
+    name: "",
+    email: "",
+    phone: "",
+    location: "",
+    bio: "",
   });
+
+  React.useEffect(() => {
+    if (isLoaded && user) {
+      setFormData({
+        name: user.fullName || "",
+        email: user.primaryEmailAddress?.emailAddress || "",
+        phone: user.primaryPhoneNumber?.phoneNumber || "",
+        location: "Rajshahi, Bangladesh",
+        bio: "Passionate Full Stack Developer and AI Enthusiast.",
+      });
+    }
+  }, [isLoaded, user]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSaving(true);
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      await axiosSecure.patch("/api/users/profile", formData);
+      Swal.fire({
+        title: "Success",
+        text: "Profile updated successfully!",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    } catch (error: any) {
+      Swal.fire("Error", error.response?.data?.message || "Failed to update profile", "error");
+    } finally {
       setIsSaving(false);
-      alert("Profile updated successfully!");
-    }, 1000);
+    }
   };
+
+  if (!isLoaded) {
+    return (
+      <div className="w-full flex justify-center items-center py-20">
+        <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
@@ -50,7 +83,7 @@ export default function DashboardProfile() {
           <div className="relative inline-block">
             <div className="w-24 h-24 rounded-full border-4 border-card bg-secondary flex items-center justify-center text-3xl font-bold text-primary shadow-md overflow-hidden">
               <img
-                src="https://github.com/md-tahmid-hasan-golap.png"
+                src={user?.imageUrl || "https://github.com/md-tahmid-hasan-golap.png"}
                 alt="Profile"
                 className="w-full h-full object-cover"
                 onError={(e) => {
@@ -58,7 +91,7 @@ export default function DashboardProfile() {
                 }}
               />
               <span className="absolute inset-0 flex items-center justify-center -z-10 bg-indigo-100 dark:bg-indigo-900/50">
-                TH
+                {formData.name ? formData.name.charAt(0).toUpperCase() : "TH"}
               </span>
             </div>
             <button className="absolute bottom-0 right-0 bg-primary text-primary-foreground p-1.5 rounded-full border-2 border-card shadow-sm hover:scale-105 transition-transform">
@@ -70,34 +103,17 @@ export default function DashboardProfile() {
         {/* Form */}
         <form onSubmit={handleSave} className="px-6 sm:px-8 pb-8 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* First Name */}
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-foreground">First Name</label>
+            {/* Full Name */}
+            <div className="space-y-2 md:col-span-2">
+              <label className="text-sm font-semibold text-foreground">Full Name</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <User className="w-4 h-4 text-muted-foreground" />
                 </div>
                 <input
                   type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-2.5 bg-background border border-input rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
-                />
-              </div>
-            </div>
-
-            {/* Last Name */}
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-foreground">Last Name</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="w-4 h-4 text-muted-foreground" />
-                </div>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-2.5 bg-background border border-input rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
                 />

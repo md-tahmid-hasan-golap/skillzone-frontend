@@ -22,28 +22,56 @@ const getLinksForRole = (role) => {
   switch (role) {
     case "admin":
       return [
-        { name: "Overview", path: "/dashboard", icon: LayoutDashboard },
+        { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
+        {
+          name: "Manage Courses",
+          path: "/dashboard/admin/courses",
+          icon: BookMarked,
+        },
+        {
+          name: "Create Course",
+          path: "/dashboard/admin/courses/create",
+          icon: BookOpen,
+        },
+        {
+          name: "My Courses",
+          path: "/dashboard/admin/my-courses",
+          icon: Briefcase,
+        },
         { name: "Manage Users", path: "/dashboard/admin/users", icon: Users },
-        { name: "Analytics", path: "/dashboard/admin/analytics", icon: BarChart3 },
-        { name: "Add Courses", path: "/dashboard/admin/courses", icon: BookMarked },
-        { name: "Reports", path: "/dashboard/admin/reports", icon: FileText },
-        { name: "Settings", path: "/dashboard/admin/settings", icon: Settings },
+        {
+          name: "Analytics",
+          path: "/dashboard/admin/analytics",
+          icon: BarChart3,
+        },
+        { name: "Profile", path: "/dashboard/profile", icon: UserCircle },
       ];
     case "manager":
       return [
-        { name: "Overview", path: "/dashboard", icon: LayoutDashboard },
-        { name: "My Courses", path: "/dashboard/manager/my-courses", icon: BookOpen },
-        { name: "Approvals", path: "/dashboard/manager/approvals", icon: Briefcase },
-        { name: "Users", path: "/dashboard/manager/users", icon: Users },
-        { name: "Reports", path: "/dashboard/manager/reports", icon: FileText },
-        { name: "Settings", path: "/dashboard/manager/settings", icon: Settings },
+        { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
+        {
+          name: "Create Course",
+          path: "/dashboard/manager/courses/create",
+          icon: BookOpen,
+        },
+        {
+          name: "My Courses",
+          path: "/dashboard/manager/my-courses",
+          icon: Briefcase,
+        },
+        {
+          name: "Approvals",
+          path: "/dashboard/manager/approvals",
+          icon: FileText,
+        },
+        { name: "Profile", path: "/dashboard/profile", icon: UserCircle },
       ];
     case "user":
     default:
       return [
-        { name: "Overview", path: "/dashboard", icon: LayoutDashboard },
-        { name: "My Profile", path: "/dashboard/profile", icon: UserCircle },
-        { name: "Settings", path: "/dashboard/settings", icon: Settings },
+        { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
+        { name: "My Learning", path: "/dashboard/learning", icon: BookOpen },
+        { name: "Profile", path: "/dashboard/profile", icon: UserCircle },
       ];
   }
 };
