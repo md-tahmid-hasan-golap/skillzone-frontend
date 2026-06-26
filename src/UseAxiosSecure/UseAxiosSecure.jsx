@@ -3,8 +3,8 @@ import { useAuth } from "@clerk/nextjs";
 import { useEffect } from "react";
 
 const axiusSecure = axios.create({
-  baseURL: "http://localhost:5000",
-  // baseURL: "https://skillzone-backend.vercel.app",
+  // baseURL: "http://localhost:5000",
+  baseURL: "https://skillzone-backend.vercel.app",
 });
 
 const UseAxiosSecure = () => {
