@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import UseAxiosSecure from "@/UseAxiosSecure/UseAxiosSecure";
 import { useUser } from "@clerk/nextjs"; // 💡 Clerk হুক ইম্পোর্ট করা হলো
 import { motion } from "framer-motion";
@@ -22,19 +22,24 @@ const itemVariants = {
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600&auto=format&fit=crop";
 
-const MyCoursesList = ({ myCourses = [], isLoading, refetch }) => {
+const MyCoursesList = ({ myCourses = [], isLoading, userEmail }) => {
   const axiosSecure = UseAxiosSecure();
+  const queryClient = useQueryClient();
   const { user } = useUser(); // 💡 Clerk ইউজার অবজেক্ট
 
   // 🛠️ ডিলিট করার মিউটেশন লজিক
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
       // ইউজারের ইমেইলটি সিকিউর উপায়ে কুয়েরি প্যারামসে পাঠানো হচ্ছে
-      const email = user?.primaryEmailAddress?.emailAddress || "";
+      const email = user?.primaryEmailAddress?.emailAddress || userEmail || "";
       const res = await axiosSecure.delete(`/skills/${id}?email=${email}`);
       return res.data;
     },
-    onSuccess: () => {
+    onSuccess: (_data, id) => {
+      queryClient.setQueryData(["mySkills", userEmail], (prevCourses = []) =>
+        prevCourses.filter((course) => course?._id !== id),
+      );
+
       Swal.fire({
         title: "Deleted!",
         text: "Your course has been deleted successfully.",
@@ -43,8 +48,12 @@ const MyCoursesList = ({ myCourses = [], isLoading, refetch }) => {
         showConfirmButton: false,
         background: "var(--background)",
         color: "var(--foreground)",
+      }).then(() => {
+        queryClient.invalidateQueries({
+          queryKey: ["mySkills", userEmail],
+          exact: false,
+        });
       });
-      refetch(); // 🔄 প্যারেন্ট পেজের ডাটা সাথে সাথে রিলোড হবে
     },
     onError: (error) => {
       Swal.fire({
@@ -72,7 +81,6 @@ const MyCoursesList = ({ myCourses = [], isLoading, refetch }) => {
       background: "var(--background)",
       color: "var(--foreground)",
     }).then((result) => {
-      refetch();
       if (result.isConfirmed) {
         deleteMutation.mutate(id);
       }
@@ -94,7 +102,7 @@ const MyCoursesList = ({ myCourses = [], isLoading, refetch }) => {
       <div className="w-full text-center py-20 border border-dashed rounded-2xl border-gray-200 dark:border-zinc-800">
         <h3 className="text-xl font-bold text-foreground">No courses found</h3>
         <p className="text-muted-foreground mt-2">
-          You haven't created any courses yet with this email.
+          You haven&apos;t created any courses yet with this email.
         </p>
       </div>
     );
