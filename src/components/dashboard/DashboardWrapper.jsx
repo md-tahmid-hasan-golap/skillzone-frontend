@@ -26,7 +26,7 @@ const DashboardWrapper = ({ children }) => {
     const fetchRole = async () => {
       try {
         const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-        const res = await fetch(`${apiUrl}/user/${user.id}`);
+        const res = await fetch(`${apiUrl}/user/${user.id}`, { cache: "no-store" });
         if (res.ok) {
           const data = await res.json();
           setDbRole(data.user?.role || "user");

@@ -14,7 +14,6 @@ import {
   ShieldAlert,
   Briefcase,
   FileText,
-  Settings,
 } from "lucide-react";
 
 // ─── Role-based Navigation Config ─────────────────────────────────────────────
