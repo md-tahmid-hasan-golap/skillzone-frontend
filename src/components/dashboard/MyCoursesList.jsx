@@ -72,6 +72,7 @@ const MyCoursesList = ({ myCourses = [], isLoading, refetch }) => {
       background: "var(--background)",
       color: "var(--foreground)",
     }).then((result) => {
+      refetch();
       if (result.isConfirmed) {
         deleteMutation.mutate(id);
       }
