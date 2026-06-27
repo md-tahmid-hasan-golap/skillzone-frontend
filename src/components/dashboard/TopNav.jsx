@@ -3,6 +3,7 @@
 import React from "react";
 import { useUser, UserButton } from "@clerk/nextjs";
 import { Menu, UserCircle, ShieldCheck } from "lucide-react";
+import ThemeToggle from "../ThemeToggle";
 
 // ─── Role badge label config ───────────────────────────────────────────────────
 const roleConfig = {
@@ -33,6 +34,8 @@ const TopNav = ({ role, toggleMobileMenu }) => {
 
       {/* Right: Role badge + Clerk User Menu */}
       <div className="flex items-center gap-3">
+        <ThemeToggle />
+        
         {/* Live Role Badge */}
         <div
           className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-semibold ${config.className}`}

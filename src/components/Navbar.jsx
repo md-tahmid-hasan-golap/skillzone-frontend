@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import { Menu, X, Sparkles, LayoutDashboard } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 const NAV_LINKS = [
   { name: "Home", path: "/" },
@@ -66,6 +67,7 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center gap-3">
+            <ThemeToggle />
             <Show when="signed-out">
               <SignInButton mode="modal">
                 <button className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors cursor-pointer">
@@ -95,7 +97,8 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Toggle */}
-          <div className="flex md:hidden">
+          <div className="flex md:hidden items-center gap-2">
+            <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 -mr-2 text-muted-foreground hover:text-foreground transition-colors focus:outline-none"
