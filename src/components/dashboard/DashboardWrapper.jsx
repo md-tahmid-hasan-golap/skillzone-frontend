@@ -25,7 +25,13 @@ const DashboardWrapper = ({ children }) => {
 
     const fetchRole = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const isLocalhost = 
+          typeof window !== "undefined" && 
+          (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
+
+        const apiUrl = isLocalhost
+          ? (process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000")
+          : "https://skillzone-backend.vercel.app";
         const res = await fetch(`${apiUrl}/user/${user.id}`, { cache: "no-store" });
         if (res.ok) {
           const data = await res.json();
